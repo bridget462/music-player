@@ -81,7 +81,6 @@ function prevSong() {
     songIndex = songs.length - 1;
   }
   loadSong(songs[songIndex]);
-  console.log(songIndex);
   playSong();
 }
 
@@ -92,7 +91,6 @@ function nextSong() {
     songIndex = 0;
   }
   loadSong(songs[songIndex]);
-  console.log(songIndex);
   playSong();
 }
 
@@ -104,21 +102,28 @@ function updateProgressBar(e) {
   if (isPlaying) {
     const { duration, currentTime } = e.srcElement;
 
-    // Update progress bar width
+    // Getting current Progress percentage to fill the bar
     const progressPercent = (currentTime / duration) * 100;
-    // Calculate display for duration
+    progress.style.width = `${progressPercent}%`;
+
+    // Getting current song duration
     const durationMinutes = Math.floor(duration / 60);
-    // calculating seconds
     let durationSeconds = Math.floor(duration % 60);
-    // display 0x s instead of x s
     if (durationSeconds < 10) {
       durationSeconds = `0${durationSeconds}`;
     }
-
     // Delay switching duration Element to avoid NaN
     if (durationSeconds) {
       durationEl.textContent = `${durationMinutes}:${durationSeconds}`;
     }
+
+    // Getting Current time
+    const currentMinutes = Math.floor(currentTime / 60);
+    let currentSeconds = Math.floor(currentTime % 60);
+    if (currentSeconds < 10) {
+      currentSeconds = `0${currentSeconds}`;
+    }
+    currentTimeEl.textContent = `${currentMinutes}:${currentSeconds}`;
   }
 }
 

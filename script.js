@@ -1,8 +1,15 @@
+// song elements
 const image = document.querySelector("img");
 const title = document.getElementById("title");
 const artist = document.getElementById("artist");
+
+// track progress
 const progressContainer = document.getElementById("progress-container");
 const progress = document.getElementById("progress");
+const currentTimeEl = document.getElementById("current-time");
+const durationEl = document.getElementById("duration");
+
+// audio control
 const music = document.querySelector("audio");
 const prevBtn = document.getElementById("prev");
 const playBtn = document.getElementById("play");
@@ -99,7 +106,19 @@ function updateProgressBar(e) {
 
     // Update progress bar width
     const progressPercent = (currentTime / duration) * 100;
-    progress.style.width = `${progressPercent}%`;
+    // Calculate display for duration
+    const durationMinutes = Math.floor(duration / 60);
+    // calculating seconds
+    let durationSeconds = Math.floor(duration % 60);
+    // display 0x s instead of x s
+    if (durationSeconds < 10) {
+      durationSeconds = `0${durationSeconds}`;
+    }
+
+    // Delay switching duration Element to avoid NaN
+    if (durationSeconds) {
+      durationEl.textContent = `${durationMinutes}:${durationSeconds}`;
+    }
   }
 }
 
